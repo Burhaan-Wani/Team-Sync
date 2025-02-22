@@ -1,11 +1,11 @@
-import { Schema, Types, model, Document } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
 export interface ProjectDocument extends Document {
     name: string;
     description: string | null;
     emoji: string;
-    workspaceId: Types.ObjectId;
-    createdBy: Types.ObjectId;
+    workspaceId: Schema.Types.ObjectId;
+    createdBy: Schema.Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
 }

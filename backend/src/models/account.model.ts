@@ -1,10 +1,10 @@
-import { Schema, Types, Document, model } from "mongoose";
+import { Schema, Document, model } from "mongoose";
 import { ProviderEnum, ProviderEnumType } from "../enums/providerEnum";
 
 export interface AccountDocument extends Document {
     provider: ProviderEnumType;
     providerId: string; // // stores email, googleId and facebookId
-    userId: Types.ObjectId;
+    userId: Schema.Types.ObjectId;
     refreshToken: string | null;
     tokenExpiry: Date | null;
     createdAt: Date;

@@ -1,22 +1,22 @@
-import { Schema, Types, model, Document } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import {
     TaskPriorityEnum,
     TaskPriorityEnumType,
     TaskStatusEnum,
     TaskStatusEnumType,
-} from "../enums/TaskStatusEnumType";
+} from "../enums/taskStatusEnumType";
 import { generateTaskCode } from "../utils/uuid";
 
 export interface TaskDocument extends Document {
     taskCode: string;
     name: string;
     description: string | null;
-    projectId: Types.ObjectId;
-    workspaceId: Types.ObjectId;
+    projectId: Schema.Types.ObjectId;
+    workspaceId: Schema.Types.ObjectId;
     status: TaskStatusEnumType;
     priority: TaskPriorityEnumType;
-    assignedTo: Types.ObjectId | null;
-    createdBy: Types.ObjectId;
+    assignedTo: Schema.Types.ObjectId | null;
+    createdBy: Schema.Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
 }

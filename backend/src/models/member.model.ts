@@ -1,9 +1,9 @@
-import { Schema, Types, model, Document } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
 export interface MemberDocument extends Document {
-    userId: Types.ObjectId;
-    workspaceId: Types.ObjectId;
-    role: Types.ObjectId;
+    userId: Schema.Types.ObjectId;
+    workspaceId: Schema.Types.ObjectId;
+    role: Schema.Types.ObjectId;
     joinedAt: Date;
     createdAt: Date;
     updatedAt: Date;

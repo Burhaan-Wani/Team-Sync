@@ -11,4 +11,16 @@ class AppError extends Error {
     }
 }
 
+export class BadRequestError extends AppError {
+    constructor(message: string, statusCode: number = 400) {
+        super(message, statusCode);
+    }
+}
+
+export class NotFoundError extends AppError {
+    constructor(message: string, statusCode: number = 404) {
+        super(message, statusCode);
+    }
+}
+
 export default AppError;

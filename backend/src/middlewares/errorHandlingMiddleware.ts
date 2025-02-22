@@ -1,4 +1,4 @@
-import { ErrorRequestHandler, Response } from "express";
+import { ErrorRequestHandler, Response, Request, NextFunction } from "express";
 import { HTTPSTATUS } from "../config/http.config";
 import config from "../config/app.config";
 
@@ -32,7 +32,12 @@ const sendProdError = (res: Response, error: CustomError) => {
     }
 };
 
-const errorHandlingMiddleware: ErrorRequestHandler = (error, _, res) => {
+const errorHandlingMiddleware: ErrorRequestHandler = (
+    error: CustomError,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     error.statusCode = error.statusCode || HTTPSTATUS.INTERNAL_SERVER_ERROR;
     error.status = error.status || "error";
 

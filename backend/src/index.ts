@@ -1,11 +1,20 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import cookieSession from "cookie-session";
+import passport from "passport";
+
 import config from "./config/app.config";
 import errorHandlingMiddleware from "./middlewares/errorHandlingMiddleware";
 import connectDB from "./config/db.config";
 
+import authRoutes from "./routes/auth.routes";
+
+import "./config/passport.config";
+
 const app = express();
+
+// PASSPORT
 
 // MIDDLEWARES
 app.use(express.json());
@@ -16,6 +25,23 @@ app.use(
         credentials: true,
     })
 );
+
+app.use(
+    cookieSession({
+        name: "session",
+        keys: [config.SESSION_SECRET],
+        maxAge: 24 * 60 * 60 * 1000,
+        secure: config.NODE_ENV === "production",
+        httpOnly: true,
+        sameSite: config.NODE_ENV === "production" ? "none" : "lax",
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// ROUTES
+app.use(`${config.BASE_URI}/auth`, authRoutes);
 
 // ERROR HANDLING MIDDLEWARE
 app.use(errorHandlingMiddleware);
