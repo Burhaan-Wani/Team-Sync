@@ -9,6 +9,7 @@ import errorHandlingMiddleware from "./middlewares/errorHandlingMiddleware";
 import connectDB from "./config/db.config";
 
 import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
 
 import "./config/passport.config";
 
@@ -42,6 +43,7 @@ app.use(passport.session());
 
 // ROUTES
 app.use(`${config.BASE_URI}/auth`, authRoutes);
+app.use(`${config.BASE_URI}/user`, userRoutes);
 
 // ERROR HANDLING MIDDLEWARE
 app.use(errorHandlingMiddleware);
