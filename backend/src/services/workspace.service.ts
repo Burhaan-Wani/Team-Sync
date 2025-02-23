@@ -7,6 +7,7 @@ import Workspace from "../models/workspace.model";
 import { BadRequestError, NotFoundError } from "../utils/AppError";
 import Project from "../models/project.model";
 import Task from "../models/task.model";
+import { TaskStatusEnum } from "../enums/taskStatusEnumType";
 
 export type createWorkspaceServiceType = {
     userId: string;
@@ -185,6 +186,67 @@ export const changeMemberRoleInWorkspaceService = async (
         member.role = role;
         await member.save();
         return { member };
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getWorkspaceMembersService = async (workspaceId: string) => {
+    try {
+        const members = await Member.find({ workspaceId })
+            .populate("userId", "name email profilePicture -password")
+            .populate("role", "name");
+
+        const roles = await Role.find({}, { name: 1, _id: 1 })
+            .select("-permissions")
+            .lean();
+
+        return { members, roles };
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getWorkspacesWhereUserIsMemberService = async (userId: string) => {
+    try {
+        const memberships = await Member.find({ userId })
+            .populate("workspaceId")
+            .select("-password")
+            .exec();
+
+        const workspaces = memberships.map(
+            membership => membership.workspaceId
+        );
+        return { workspaces };
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getWorkspaceAnalyticsService = async (workspaceId: string) => {
+    try {
+        const currentDate = new Date();
+
+        const totalTasks = await Task.countDocuments({
+            workspaceId,
+        });
+
+        const overdueTasks = await Task.countDocuments({
+            workspaceId,
+            dueDate: { $lt: currentDate },
+            status: { $ne: TaskStatusEnum.DONE },
+        });
+        const completedTasks = await Task.countDocuments({
+            workspaceId,
+            status: TaskStatusEnum.DONE,
+        });
+
+        const analytics = {
+            totalTasks,
+            overdueTasks,
+            completedTasks,
+        };
+        return { analytics };
     } catch (error) {
         throw error;
     }

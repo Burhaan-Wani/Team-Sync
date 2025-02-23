@@ -19,7 +19,7 @@ const memberSchema = new Schema<MemberDocument>(
         },
         workspaceId: {
             type: Schema.Types.ObjectId,
-            ref: "workspace",
+            ref: "Workspace",
             required: true,
         },
         role: {

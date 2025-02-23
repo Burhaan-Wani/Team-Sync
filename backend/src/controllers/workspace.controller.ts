@@ -11,7 +11,10 @@ import {
     createWorkspaceService,
     deleteWorkspaceService,
     getMemberRoleInWorkspace,
+    getWorkspaceAnalyticsService,
+    getWorkspaceMembersService,
     getWorkspaceService,
+    getWorkspacesWhereUserIsMemberService,
     updateWorkspaceService,
 } from "../services/workspace.service";
 import { HTTPSTATUS } from "../config/http.config";
@@ -115,6 +118,56 @@ export const changeMemberRoleInWorkspace = catchAsync(
     }
 );
 
-export const x = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {}
+export const getWorkspaceMembers = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const workspaceId = req.params.workspaceId;
+        const userId = req.user?._id;
+
+        const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
+        roleGuard(role, [Permissions.VIEW_ONLY]);
+
+        const { members, roles } = await getWorkspaceMembersService(
+            workspaceId
+        );
+
+        res.status(HTTPSTATUS.OK).json({
+            status: "success",
+            message: "Workspace members retrieved successfully",
+            members,
+            roles,
+        });
+    }
+);
+
+export const getWorkspacesWhereUserIsMember = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const userId = req.user?._id;
+
+        const { workspaces } = await getWorkspacesWhereUserIsMemberService(
+            userId
+        );
+
+        res.status(HTTPSTATUS.OK).json({
+            status: "success",
+            message: "Workspaces fetched successfully",
+            workspaces,
+        });
+    }
+);
+
+export const getWorkspaceAnalytics = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const workspaceId = req.params.workspaceId;
+        const userId = req.user?._id;
+        const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
+        roleGuard(role, [Permissions.VIEW_ONLY]);
+
+        const { analytics } = await getWorkspaceAnalyticsService(workspaceId);
+
+        return res.status(HTTPSTATUS.OK).json({
+            status: "success",
+            message: "Workspace analytics retrieved successfully",
+            analytics,
+        });
+    }
 );
