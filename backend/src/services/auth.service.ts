@@ -87,6 +87,7 @@ export const loginOrCreateAccountService = async (
     }
 };
 
+// register
 export const registerUserService = async (data: RegisterUserServiceType) => {
     const session = await mongoose.startSession();
     try {
@@ -158,18 +159,18 @@ export const verifyUserService = async ({
             providerId: email,
         });
         if (!account) {
-            throw new AppError("User not found for the given account", 400);
+            throw new NotFoundError("User not found for the given account");
         }
 
         const user = await User.findById(account.userId);
 
         if (!user) {
-            throw new AppError("User not found for the given account", 401);
+            throw new NotFoundError("User not found for the given account");
         }
         const isMatch = await user.comparePassword(password as string);
 
         if (!isMatch) {
-            throw new AppError("Invalid email or password", 401);
+            throw new BadRequestError("Invalid email or password");
         }
 
         return user.omitPassword();

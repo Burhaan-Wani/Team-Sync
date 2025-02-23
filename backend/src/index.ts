@@ -10,12 +10,12 @@ import connectDB from "./config/db.config";
 
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
-
-import "./config/passport.config";
+import workspaceRoutes from "./routes/workspace.routes";
 
 const app = express();
 
 // PASSPORT
+import "./config/passport.config";
 
 // MIDDLEWARES
 app.use(express.json());
@@ -42,8 +42,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // ROUTES
-app.use(`${config.BASE_URI}/auth`, authRoutes);
 app.use(`${config.BASE_URI}/user`, userRoutes);
+app.use(`${config.BASE_URI}/auth`, authRoutes);
+app.use(`${config.BASE_URI}/workspaces`, workspaceRoutes);
 
 // ERROR HANDLING MIDDLEWARE
 app.use(errorHandlingMiddleware);

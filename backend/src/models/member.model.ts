@@ -1,9 +1,10 @@
 import { Schema, model, Document } from "mongoose";
+import { RoleDocument } from "./rolePermissions.model";
 
 export interface MemberDocument extends Document {
     userId: Schema.Types.ObjectId;
     workspaceId: Schema.Types.ObjectId;
-    role: Schema.Types.ObjectId;
+    role: RoleDocument;
     joinedAt: Date;
     createdAt: Date;
     updatedAt: Date;
