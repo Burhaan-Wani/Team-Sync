@@ -12,6 +12,8 @@ import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import workspaceRoutes from "./routes/workspace.routes";
 
+import projectRoutes from "./routes/project.routes";
+
 const app = express();
 
 // PASSPORT
@@ -45,6 +47,7 @@ app.use(passport.session());
 app.use(`${config.BASE_URI}/user`, userRoutes);
 app.use(`${config.BASE_URI}/auth`, authRoutes);
 app.use(`${config.BASE_URI}/workspaces`, workspaceRoutes);
+app.use(`${config.BASE_URI}/projects`, projectRoutes);
 
 // ERROR HANDLING MIDDLEWARE
 app.use(errorHandlingMiddleware);
