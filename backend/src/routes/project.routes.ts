@@ -21,4 +21,5 @@ router
 router.get("/:id/workspaces/:workspaceId/analytics", getProjectAnalytics);
 
 router.get("/workspaces/:workspaceId/all", getAllProjectsOfAWorkspace);
+
 export default router;
