@@ -123,6 +123,7 @@ export const getAllProjectsOfAWorkspace = catchAsync(
         res.status(HTTPSTATUS.OK).json({
             status: "success",
             message: "Projects fetched successfully",
+            projects,
             pagination: {
                 totalCount,
                 pageSize,

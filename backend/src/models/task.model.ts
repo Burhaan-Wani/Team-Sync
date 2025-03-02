@@ -9,7 +9,7 @@ import { generateTaskCode } from "../utils/uuid";
 
 export interface TaskDocument extends Document {
     taskCode: string;
-    name: string;
+    title: string;
     description: string | null;
     projectId: Schema.Types.ObjectId;
     workspaceId: Schema.Types.ObjectId;
@@ -17,6 +17,7 @@ export interface TaskDocument extends Document {
     priority: TaskPriorityEnumType;
     assignedTo: Schema.Types.ObjectId | null;
     createdBy: Schema.Types.ObjectId;
+    dueDate: Date | null;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -28,7 +29,7 @@ const taskSchema = new Schema<TaskDocument>(
             unique: true,
             default: generateTaskCode,
         },
-        name: {
+        title: {
             type: String,
             required: true,
             trim: true,
@@ -67,6 +68,10 @@ const taskSchema = new Schema<TaskDocument>(
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,
+        },
+        dueDate: {
+            type: Date,
+            default: null,
         },
     },
     {

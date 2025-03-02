@@ -134,10 +134,10 @@ export const registerUserService = async (data: RegisterUserServiceType) => {
         user.currentWorkspace = workspace._id as Schema.Types.ObjectId;
         await user.save({ session });
 
-        session.commitTransaction();
+        await session.commitTransaction();
         session.endSession();
     } catch (error) {
-        session.abortTransaction();
+        await session.abortTransaction();
         session.endSession();
         throw error;
     }

@@ -1,6 +1,7 @@
 import express from "express";
 import { isAuthenticated } from "../middlewares/auth.middleware";
 import {
+    createTask,
     deleteTask,
     getAllTasks,
     getTaskById,
@@ -11,10 +12,10 @@ const router = express.Router();
 
 router.use(isAuthenticated);
 
-router.post("/projects/:projectId/workspaces/:workspaceId/create");
+router.post("/projects/:projectId/workspaces/:workspaceId/create", createTask);
 
 router.post(
-    "/:id/projects/:projectId/workspaces/:workspaceId/create",
+    "/:id/projects/:projectId/workspaces/:workspaceId/update",
     updateTask
 );
 
