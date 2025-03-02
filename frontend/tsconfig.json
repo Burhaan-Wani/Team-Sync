@@ -1,14 +1,13 @@
 {
+    "files": [],
+    "references": [
+        { "path": "./tsconfig.app.json" },
+        { "path": "./tsconfig.node.json" }
+    ],
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
             "@/*": ["./src/*"]
-        },
-        "types": ["vite/client"]
-    },
-    "include": ["src", "vite-env.d.ts"],
-    "references": [
-        { "path": "./tsconfig.app.json" },
-        { "path": "./tsconfig.node.json" }
-    ]
+        }
+    }
 }
