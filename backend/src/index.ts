@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import cookieSession from "cookie-session";
 import passport from "passport";
+import path from "path";
 
 import config from "./config/app.config";
 import errorHandlingMiddleware from "./middlewares/errorHandlingMiddleware";
@@ -45,6 +46,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 // ROUTES
 app.use(`${config.BASE_URI}/user`, userRoutes);
 app.use(`${config.BASE_URI}/auth`, authRoutes);
@@ -52,6 +54,10 @@ app.use(`${config.BASE_URI}/workspaces`, workspaceRoutes);
 app.use(`${config.BASE_URI}/projects`, projectRoutes);
 app.use(`${config.BASE_URI}/tasks`, taskRoutes);
 app.use(`${config.BASE_URI}/members`, memberRoutes);
+
+app.get("*", (_, res) => {
+    res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+});
 
 // ERROR HANDLING MIDDLEWARE
 app.use(errorHandlingMiddleware);

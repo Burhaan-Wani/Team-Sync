@@ -2,12 +2,12 @@
     "name": "backend",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
+    "main": "src/index.ts",
     "scripts": {
         "dev": "ts-node-dev --files src/index.ts",
-        "build": "npx tsc -b && cp /package.json ./dist",
+        "build": "npm install && npx tsc -b",
         "seed": "ts-node-dev src/seeders/rolesSeeder.ts",
-        "start": "node dist/index.js"
+        "start": "node ./dist/index.js"
     },
     "keywords": [],
     "author": "",

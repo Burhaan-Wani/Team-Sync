@@ -156,7 +156,6 @@ export const getProjectsInWorkspaceQueryFn = async ({
     const response = await API.get(
         `/projects/workspaces/${workspaceId}/all?pageSize=${pageSize}&pageNumber=${pageNumber}`
     );
-    console.log(response.data);
     return response.data;
 };
 
