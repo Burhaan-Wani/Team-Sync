@@ -8,12 +8,12 @@ import QueryProvider from "./context/query-provider.tsx";
 import { Toaster } from "./components/ui/toaster.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <QueryProvider>
-      <NuqsAdapter>
-        <App />
-      </NuqsAdapter>
-      <Toaster />
-    </QueryProvider>
-  </StrictMode>
+    <StrictMode>
+        <QueryProvider>
+            <NuqsAdapter>
+                <App />
+            </NuqsAdapter>
+            <Toaster />
+        </QueryProvider>
+    </StrictMode>
 );
